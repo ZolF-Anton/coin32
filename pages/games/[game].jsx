@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { PlatformType } from '../../components/mini/PlatformType';
 import { GameTag } from '../../components/mini/GameTag';
 import MainContainer from '../../components/MainContainer';
+import SwiperApp from '../../components/swiper';
 
 import blackHole from '../../images/blackhole.svg';
 
@@ -41,6 +42,13 @@ const GameCard = styled.div`
     contain: layout paint;
 
     margin-top: 3px;
+`;
+const GameCard_wrap = styled.div`
+    @media screen and (min-width: 1023px) {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+    }
 `;
 const Game_buttons = styled.div`
     display: flex;
@@ -98,6 +106,20 @@ const Game_image_mobile = styled(Game_image)`
     scroll-padding: 0;
     overflow: auto;
     display: flex;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    @media screen and (min-width: 1023px) {
+        display: none;
+    }
+`;
+const Game_image_swiper = styled(Game_image)`
+    margin-top: 7px;
+
+    @media screen and (max-width: 1024px) {
+        display: none;
+    }
 
     &::-webkit-scrollbar {
         display: none;
@@ -199,100 +221,88 @@ const Game = ({ game, screenShots }) => {
     } = game;
     return (
         <MainContainer>
-            <GameCard>
-                <Game_buttons>
-                    <Game_a_store>Store</Game_a_store>
-                    <Game_a_store>In Library</Game_a_store>
-                    <Game_a_store>Wishlist</Game_a_store>
-                    <Game_a_store>Follow</Game_a_store>
-                    <Game_a_store>Ignore</Game_a_store>
-                </Game_buttons>
-                <Link href={`/games/${slug}`} passHref>
-                    <Game_title>{name}</Game_title>
-                </Link>
-
-                <Game_image>
-                    <Link href={`/games/${slug}`}>
-                        <a>
-                            <Image
-                                alt={name}
-                                src={background_image}
-                                layout='fill'
-                                objectFit='cover'
-                                quality={50}
-                            />
-                        </a>
+            <GameCard_wrap>
+                {' '}
+                <GameCard>
+                    <Game_buttons>
+                        <Game_a_store>Store</Game_a_store>
+                        <Game_a_store>In Library</Game_a_store>
+                        <Game_a_store>Wishlist</Game_a_store>
+                        <Game_a_store>Follow</Game_a_store>
+                        <Game_a_store>Ignore</Game_a_store>
+                    </Game_buttons>
+                    <Link href={`/games/${slug}`} passHref>
+                        <Game_title>{name}</Game_title>
                     </Link>
-                </Game_image>
-                <Game_meta>
-                    Developer: <b>{(developers[0]?.name, developers[1]?.name) || 'n/a'}</b>
-                </Game_meta>
-                <Game_meta>
-                    Release Date: <b>{released}</b>
-                </Game_meta>
-                <Game_meta>
-                    Last Update: <b>{updated.slice(0, 10)}</b>
-                </Game_meta>
-                <Game_meta>
-                    ESRB rating: <b>{esrb_rating?.name || 'Rating Pending'}</b>
-                </Game_meta>
-                <Game_meta>
-                    Followers: <b>{publishers[0]?.name}</b>
-                </Game_meta>
-                <Game_meta>
-                    Platforms:
-                    {parent_platforms.map((parent) => (
-                        <PlatformType
-                            key={parent.platform?.id}
-                            platformName={parent.platform?.name}
-                        />
-                    ))}
-                </Game_meta>
-                <Game_tag_row>
-                    {genres.map((genre) => (
-                        <GameTag key={genre.id}>{genre.name}</GameTag>
-                    ))}
-                </Game_tag_row>
-                <Game_warning__center>
-                    <Game_a href={website} target='_blank' rel='noopener noreferrer'>
-                        Click to visit game's original website
-                    </Game_a>
-                </Game_warning__center>
-                <Game_review_summary>
-                    Rating:
-                    <span> {rating}</span>
-                </Game_review_summary>
-                <Game_review_summary>
-                    <a href={metacritic_platforms[0]?.url}>
-                        Metacritic score:
-                        <span> {metacritic || '...loading'}</span>
-                    </a>
-                </Game_review_summary>
-            </GameCard>
-            <GameCard>
-                <Game_meta_second>Description:</Game_meta_second>
-                <Game_review_summary>{description_raw}</Game_review_summary>
-                <Game_meta_second>Requirements:</Game_meta_second>
-                <Game_review_summary>{platforms[0].requirements.minimum}</Game_review_summary>
-                <Game_review_summary>{platforms[0].requirements.recommended}</Game_review_summary>
-                <Game_meta_second>Screenshots:</Game_meta_second>
-                <Game_image_mobile>
-                    {/* <Game_image_wrap>
-                       <Image
-                                        key={shot.id}
-                                        alt={name}
-                                        src={shot.image}
-                                        layout='fill'
-                                        objectFit='cover'
-                                        quality={70}
-                                        placeholder='blur'
-                                        blurDataURL={`data:image/svg+xml;base64,${toBase64(
-                                            shimmer(700, 475)
-                                        )}`}
-                                    />
-                    </Game_image_wrap> */}
 
-                    <>
+                    <Game_image>
+                        <Link href={`/games/${slug}`}>
+                            <a>
+                                <Image
+                                    alt={name}
+                                    src={background_image}
+                                    layout='fill'
+                                    objectFit='cover'
+                                    quality={50}
+                                />
+                            </a>
+                        </Link>
+                    </Game_image>
+                    <Game_meta>
+                        Developer: <b>{(developers[0]?.name, developers[1]?.name) || 'n/a'}</b>
+                    </Game_meta>
+                    <Game_meta>
+                        Release Date: <b>{released}</b>
+                    </Game_meta>
+                    <Game_meta>
+                        Last Update: <b>{updated.slice(0, 10)}</b>
+                    </Game_meta>
+                    <Game_meta>
+                        ESRB rating: <b>{esrb_rating?.name || 'Rating Pending'}</b>
+                    </Game_meta>
+                    <Game_meta>
+                        Followers: <b>{publishers[0]?.name}</b>
+                    </Game_meta>
+                    <Game_meta>
+                        Platforms:
+                        {parent_platforms.map((parent) => (
+                            <PlatformType
+                                key={parent.platform?.id}
+                                platformName={parent.platform?.name}
+                            />
+                        ))}
+                    </Game_meta>
+                    <Game_tag_row>
+                        {genres.map((genre) => (
+                            <GameTag key={genre.id}>{genre.name}</GameTag>
+                        ))}
+                    </Game_tag_row>
+                    <Game_warning__center>
+                        <Game_a href={website} target='_blank' rel='noopener noreferrer'>
+                            Click to visit game's original website
+                        </Game_a>
+                    </Game_warning__center>
+                    <Game_review_summary>
+                        Rating:
+                        <span> {rating}</span>
+                    </Game_review_summary>
+                    <Game_review_summary>
+                        <a href={metacritic_platforms[0]?.url}>
+                            Metacritic score:
+                            <span> {metacritic || '...loading'}</span>
+                        </a>
+                    </Game_review_summary>
+                </GameCard>
+                <GameCard>
+                    <Game_meta_second>Description:</Game_meta_second>
+                    <Game_review_summary>{description_raw}</Game_review_summary>
+                    <Game_meta_second>Requirements:</Game_meta_second>
+                    <Game_review_summary>{platforms[0].requirements.minimum}</Game_review_summary>
+                    <Game_review_summary>
+                        {platforms[0].requirements.recommended}
+                    </Game_review_summary>
+                    <Game_meta_second>Screenshots:</Game_meta_second>
+                    <Game_image_mobile>
                         {screenShots &&
                             screenShots.results.map((shot) => (
                                 <Game_image_wrap>
@@ -310,25 +320,28 @@ const Game = ({ game, screenShots }) => {
                                     />
                                 </Game_image_wrap>
                             ))}
-                    </>
-                </Game_image_mobile>
-                <Game_meta_second>Video:</Game_meta_second>
-                <Game_video
-                    muted
-                    loop
-                    controls
-                    poster={clip?.preview || null}
-                    src={clip?.clip}
-                ></Game_video>
-                <Game_meta_second>Tags:</Game_meta_second>
-                {tags.map((tag) => (
-                    <Game_tag key={tag.id}>{tag.name}</Game_tag>
-                ))}
+                    </Game_image_mobile>
+                    <Game_image_swiper>
+                        <SwiperApp screenShots={screenShots} game={game} />
+                    </Game_image_swiper>
+                    <Game_meta_second>Video:</Game_meta_second>
+                    <Game_video
+                        muted
+                        loop
+                        controls
+                        poster={clip?.preview || null}
+                        src={clip?.clip}
+                    ></Game_video>
+                    <Game_meta_second>Tags:</Game_meta_second>
+                    {tags.map((tag) => (
+                        <Game_tag key={tag.id}>{tag.name}</Game_tag>
+                    ))}
 
-                <Link href={`/games`} passHref>
-                    <Game_warning__center>Back to main page</Game_warning__center>
-                </Link>
-            </GameCard>
+                    <Link href={`/games`} passHref>
+                        <Game_warning__center>Back to main page</Game_warning__center>
+                    </Link>
+                </GameCard>
+            </GameCard_wrap>
         </MainContainer>
     );
 };

@@ -1,4 +1,5 @@
 import '../styles/global.css';
+import '../styles/swiper.css';
 import { ThemeProvider } from 'styled-components';
 
 // This default export is required in a new `pages/_app.js` file.

@@ -7,6 +7,7 @@ import { Search } from '../components/Search';
 import GameItem from '../components/GameItem';
 import { useIntersect } from '../hooks/useIntersect';
 import { BiLoader } from 'react-icons/bi';
+import { Scroll2top } from '../components/mini/scroll2top';
 
 const Navbar = styled.nav`
     background: blueviolet;
@@ -94,13 +95,14 @@ const Games = ({ gamesPros }) => {
 
     return (
         <MainContainer>
-            <H1_games>New and trending Games</H1_games>
+            <H1_games>{text ? 'Find your Game' : 'New and trending Games'}</H1_games>
             <Search setText={setText} setFilters={setFilters} setOrdering={setOrdering} />
 
             <GameList>
                 {data.map((game) => (
                     <GameItem key={game.id} {...game} />
                 ))}
+                <Scroll2top />
             </GameList>
             <PaginationWrap ref={ref}>
                 {nextPage ? <BiLoader color={'#e60'} size={'4em'} /> : "That's all"}

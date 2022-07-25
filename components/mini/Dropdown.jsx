@@ -736,7 +736,6 @@ export const Dropdown = ({ setFilters }) => {
             const resp = await fetch(urlList.main);
             const fetchData = await resp.json();
             setItem(fetchData.results);
-            //setItem(dataLocal);
         })();
     }, []);
 

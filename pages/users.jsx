@@ -42,6 +42,6 @@ export async function getStaticProps(context) {
     const usersPros = await response.json();
 
     return {
-        props: { usersPros }, // will be passed to the page component as props
+        props: { usersPros },
     };
 }

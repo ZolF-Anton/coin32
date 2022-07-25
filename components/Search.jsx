@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 import { IoSearch } from 'react-icons/io5';
 
-//import { useState } from 'react';
 import useDebounceLite from '../hooks/useDebounceLite';
 import { useEffect, useState } from 'react';
 import { Dropdown } from './mini/Dropdown';
@@ -52,9 +51,7 @@ export const Search = ({ setText, setFilters, setOrdering }) => {
     };
     const handleSubmit = (e) => {
         e.preventDefault();
-        //setText(e.target[0].value);
         setSearch(e.target[0].value);
-        console.log(e.target[0].value);
     };
 
     useEffect(() => {

@@ -37,7 +37,7 @@ const GameCard = styled.div`
     padding: 16px;
     z-index: 3;
     box-shadow: 0 8px 24px #959da533;
-    //position: relative;
+
     transition: left 0.2s ease-out, top 0.2s ease-out;
     contain: layout paint;
 
@@ -196,7 +196,6 @@ const Game_video = styled.video.attrs((props) => (props.poster, props.src))`
 const Game_tag = styled(Game_a_store).attrs((props) => props.href)``;
 
 const Game = ({ game, screenShots }) => {
-    console.log('screenShots:', screenShots.results);
     const {
         background_image,
         background_image_additional,

@@ -4,18 +4,20 @@ import { IoSearch } from 'react-icons/io5';
 
 //import { useState } from 'react';
 import useDebounceLite from '../hooks/useDebounceLite';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Dropdown } from './mini/Dropdown';
 
 const InputContainer = styled.label`
     background-color: whitesmoke;
     padding: 1rem 2rem;
     display: flex;
     align-items: center;
-
+    justify-content: space-between;
     border-radius: 0.5rem;
     box-shadow: hsla(210, 8%, 62%, 0.2) 0px 8px 24px;
-    width: 100%;
-    margin-bottom: 1rem;
+    width: 85%;
+
+    margin: 1rem auto;
 
     @media (min-width: 767px) {
         margin-bottom: 0;
@@ -32,24 +34,32 @@ const Input = styled.input.attrs({
     outline: none;
     color: darkslategrey;
     background-color: whitesmoke;
+    width: 75%;
 `;
+const data = [
+    { id: 0, label: 'Istanbul, TR (AHL)' },
+    { id: 1, label: 'Paris, FR (CDG)' },
+];
 
-export const Search = ({ setText, text }) => {
-    //const dispatch = useDispatch();
+export const Search = ({ setText, setFilters }) => {
+    const [search, setSearch] = useState('');
 
-    const debounceSearch = useDebounceLite(text, 1300);
+    const debounceSearch = useDebounceLite(search, 1300);
 
     const handleSearch = (e) => {
-        setText(e.target.value);
+        setSearch(e.target.value);
     };
 
     useEffect(() => {
-        console.log('text', text);
+        setText(search);
     }, [debounceSearch]);
     return (
-        <InputContainer>
-            <IoSearch />
-            <Input onChange={handleSearch} value={text} onLoad={(e) => onLoadLog(e)} />
-        </InputContainer>
+        <form onSubmit={(e) => e.preventDefault()}>
+            <InputContainer>
+                <IoSearch />
+                <Input onChange={handleSearch} value={search} />
+            </InputContainer>
+            <Dropdown setFilters={setFilters}></Dropdown>
+        </form>
     );
 };

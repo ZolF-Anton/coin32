@@ -5,13 +5,17 @@ const nextConfig = {
     compiler: {
         styledComponents: true,
         ssr: true,
-        displayName: true,
-        meaninglessFileNames: false,
-        removeConsole: true,
+        displayName: false,
+        meaninglessFileNames: true,
+        removeConsole: false,
     },
     images: {
         domains: ['localhost', 'media.rawg.io'],
         formats: ['image/avif', 'image/webp'],
+    },
+    watchOptions: {
+        aggregateTimeout: 200,
+        poll: 1000,
     },
 };
 

@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import A from '../components/A';
 import MainContainer from '../components/MainContainer';
 import { Search } from '../components/Search';
 import GameItem from '../components/GameItem';
 import { useIntersect } from '../hooks/useIntersect';
+import { BiLoader } from 'react-icons/bi';
 
 const Navbar = styled.nav`
     background: blueviolet;
@@ -29,47 +30,28 @@ const GameList = styled.div`
     justify-content: center;
     justify-items: center;
 `;
-
-const PaginationWrap = styled.div`
-    width: 50%;
-    height: 67px;
-    margin: 3rem auto;
-    background-color: #30455a;
-    box-shadow: 0 8px 24px #959da533;
-    border-radius: 5rem;
-    padding: 2rem 5rem;
+const rotateAnim = keyframes`
+    0% {transform: rotateZ(0deg);}
+    100% {transform: rotateZ(360deg);}
 `;
 
-let LinkArr = [
-    'https://rawg.io/api/games?search=',
-    'driver',
-    '&parent_platforms=',
-    '1',
-    '&ordering=',
-    '-name',
-    '&page=1&page_size=20&',
-    'filter=true',
-    '&key=c542e67aec3a4340908f9de9e86038af',
-];
+const PaginationWrap = styled.div`
+    display: flex;
+    width: 55px;
+    height: 55px;
+    margin: 1rem auto;
+    background-color: #30455a;
+    box-shadow: 0 8px 24px #959da533;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    animation: ${rotateAnim} 2s infinite 100ms linear;
+`;
 
-const searchTools = {
-    test1: `https://rawg.io/api/games?search=driver&parent_platforms=1&ordering=-name&page=1&page_size=20&filter=true&key=c542e67aec3a4340908f9de9e86038af`,
-
-    test: 'https://api.rawg.io/api/games?filter=true&key=c542e67aec3a4340908f9de9e86038af&page=1&page_size=20&search=driver&parent_platforms=1&ordering=-name',
-
-    test2: 'https://api.rawg.io/api/games?key=fcc863d352c344f68b3271b8be5ecb6b&filter=true&page=1&page_size=10&search=spider',
-
-    link: 'https://rawg.io/api/games',
-    linkSearch: 'https://rawg.io/api/games?search=',
-    linkList: 'https://rawg.io/api/games/lists/',
-    options: {
-        parent_platform: null,
-        sort_name: 'name',
-        sort_released: '-released',
-    },
-};
-
-// let b = `${searchTools.link}search=${text}&page=1&page_size=5&key=fcc863d352c344f68b3271b8be5ecb6b`;
+const H1_games = styled.h1`
+    font-size: 2.7rem;
+    text-align: center;
+`;
 
 const Games = ({ gamesPros }) => {
     const [text, setText] = useState('');
@@ -81,23 +63,12 @@ const Games = ({ gamesPros }) => {
     const [ref, entry] = useIntersect({
         threshold: 0.1,
     });
-    let searchLink = '';
+
     const smartLink = `https://api.rawg.io/api/games?key=fcc863d352c344f68b3271b8be5ecb6b&filter=true&page=1&page_size=10&search=`;
 
-    // const urlBuilder = (search, parent_platform, ordering) => {
-    //     setSearchLink(
-    //         `${smartLink}${search}${parent_platform && `&parent_platforms=${parent_platform}`}${
-    //             ordering && `&ordering${ordering}`
-    //         }}`
-    //     );
-    // };
-
-    useEffect(() => {
-        //urlBuilder(text, filters[0], filters[1])();
-        searchLink = `${smartLink}${text}${filters[0] && `&parent_platforms=${filters}`}${
-            ordering && `&ordering=${ordering}`
-        }}`;
-    }, [text, filters]);
+    let filtPlatform = `${filters ? `&parent_platforms=${filters}` : ''}`;
+    let filtOrder = `${ordering ? `&ordering=${ordering}` : ''}`;
+    let searchLink = `${smartLink}${text}${filtPlatform}${filtOrder}`;
 
     useEffect(() => {
         (async () => {
@@ -111,17 +82,19 @@ const Games = ({ gamesPros }) => {
     useEffect(() => {
         if (text) {
             (async () => {
-                //const resp = await fetch(`${smartLink}${text}`);
                 const resp = await fetch(searchLink);
                 const fetchData = await resp.json();
                 setData(fetchData.results);
+                console.log('##############  searchLink', searchLink);
+                console.log('############## filtPlatform', filtPlatform);
+                console.log('##############  filtOrder', filtOrder);
             })();
         } else setData(gamesPros.results);
-    }, [text]);
+    }, [text, filters, ordering]);
 
     return (
         <MainContainer>
-            <h1>GAMES</h1>
+            <H1_games>New and trending Games</H1_games>
             <Search setText={setText} setFilters={setFilters} setOrdering={setOrdering} />
 
             <GameList>
@@ -129,7 +102,9 @@ const Games = ({ gamesPros }) => {
                     <GameItem key={game.id} {...game} />
                 ))}
             </GameList>
-            <PaginationWrap ref={ref}>{nextPage ? '...loading' : "That's all"}</PaginationWrap>
+            <PaginationWrap ref={ref}>
+                {nextPage ? <BiLoader color={'#e60'} size={'4em'} /> : "That's all"}
+            </PaginationWrap>
         </MainContainer>
     );
 };

@@ -6,6 +6,7 @@ import { IoSearch } from 'react-icons/io5';
 import useDebounceLite from '../hooks/useDebounceLite';
 import { useEffect, useState } from 'react';
 import { Dropdown } from './mini/Dropdown';
+import { DropdownOrder } from './mini/DropdownOrder';
 
 const InputContainer = styled.label`
     background-color: whitesmoke;
@@ -41,7 +42,7 @@ const data = [
     { id: 1, label: 'Paris, FR (CDG)' },
 ];
 
-export const Search = ({ setText, setFilters }) => {
+export const Search = ({ setText, setFilters, setOrdering }) => {
     const [search, setSearch] = useState('');
 
     const debounceSearch = useDebounceLite(search, 1300);
@@ -49,17 +50,24 @@ export const Search = ({ setText, setFilters }) => {
     const handleSearch = (e) => {
         setSearch(e.target.value);
     };
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        //setText(e.target[0].value);
+        setSearch(e.target[0].value);
+        console.log(e.target[0].value);
+    };
 
     useEffect(() => {
         setText(search);
     }, [debounceSearch]);
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={(e) => handleSubmit(e)}>
             <InputContainer>
                 <IoSearch />
                 <Input onChange={handleSearch} value={search} />
             </InputContainer>
             <Dropdown setFilters={setFilters}></Dropdown>
+            <DropdownOrder setOrdering={setOrdering}></DropdownOrder>
         </form>
     );
 };

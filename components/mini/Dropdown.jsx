@@ -665,13 +665,14 @@ const dataLocal = [
 ];
 
 const DropdownWrap = styled.div`
-    width: 300px;
     border-radius: 10px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     background-color: white;
     width: 85%;
-
     margin: 1rem auto;
+    @media screen and (min-width: 430px) {
+        width: 350px;
+    }
 `;
 const DropdownHeader = styled.div`
     padding: 15px;
@@ -714,7 +715,7 @@ const DropItemDot = styled.span`
     transition: all 0.2s ease-in-out;
 `;
 
-export const Dropdown = ({ setFilters, setOrdering }) => {
+export const Dropdown = ({ setFilters }) => {
     const [isOpen, setOpen] = useState(false);
     const [items, setItem] = useState([]);
     const [selectedItem, setSelectedItem] = useState(null);
@@ -726,7 +727,7 @@ export const Dropdown = ({ setFilters, setOrdering }) => {
 
     const handleItemClick = (id) => {
         selectedItem == id ? setSelectedItem(null) : setSelectedItem(id);
-        setFilters(selectedItem);
+
         toggleDropdown();
     };
 
@@ -734,14 +735,15 @@ export const Dropdown = ({ setFilters, setOrdering }) => {
         (async () => {
             const resp = await fetch(urlList.main);
             const fetchData = await resp.json();
-
-            setItem(dataLocal);
+            setItem(fetchData.results);
+            //setItem(dataLocal);
         })();
     }, []);
 
-    // useEffect(() => {
-    //     setFilters(selectedItem);
-    // }, [selectedItem]);
+    useEffect(() => {
+        //setFilters(selectedItem);
+        setFilters(selectedItem);
+    }, [selectedItem]);
 
     return (
         <DropdownWrap>
@@ -764,7 +766,6 @@ export const Dropdown = ({ setFilters, setOrdering }) => {
                     </DropItem>
                 ))}
             </DropdownBody>
-            {console.log(selectedItem)}
         </DropdownWrap>
     );
 };

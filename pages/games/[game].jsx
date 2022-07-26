@@ -127,6 +127,8 @@ const Game_image_swiper = styled(Game_image)`
 `;
 const Game_image_wrap = styled(Game_image)`
     scroll-snap-align: center;
+    margin: 0;
+    position: relative;
 `;
 const Game_meta = styled.div`
     margin-bottom: 6px;
@@ -193,6 +195,7 @@ const Game_video = styled.video.attrs((props) => (props.poster, props.src))`
     width: 100%;
     border-radius: 5px;
 `;
+
 const Game_tag = styled(Game_a_store).attrs((props) => props.href)``;
 
 const Game = ({ game, screenShots }) => {

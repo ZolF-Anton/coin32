@@ -8,6 +8,8 @@ const Navbar = styled.nav`
     padding: 15px;
     color: #fff;
     text-decoration: none;
+    z-index: 30;
+    position: relative;
 `;
 const MainContainer = ({ children, keywords }) => {
     return (

@@ -8,8 +8,6 @@ import { GameTag } from '../../components/mini/GameTag';
 import MainContainer from '../../components/MainContainer';
 import SwiperApp from '../../components/swiper';
 
-import blackHole from '../../images/blackhole.svg';
-
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
@@ -37,10 +35,8 @@ const GameCard = styled.div`
     padding: 16px;
     z-index: 3;
     box-shadow: 0 8px 24px #959da533;
-
     transition: left 0.2s ease-out, top 0.2s ease-out;
     contain: layout paint;
-
     margin-top: 3px;
 `;
 const GameCard_wrap = styled.div`
@@ -165,18 +161,24 @@ const Game_tag_app = styled.a`
         scroll-snap-align: start;
     }
 `;
-const Game_warning__center = styled.div`
+const Game_button__orange = styled.button`
     margin-top: 7px;
     line-height: 1;
     color: #fff;
-    padding: 7px 8px;
-    background-color: #e60;
+    width: 100%;
+    padding: 9.5px 8px;
+    border: none;
+    background-color: ${(props) => props.bgColor || '#e60'};
     border-radius: 5px;
     font-size: 13px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
+    cursor: pointer;
+`;
+const Game_back__button = styled(Game_button__orange)`
+    padding: 12px 8px;
 `;
 const Game_review_summary = styled.div`
     margin-top: 7px;
@@ -201,7 +203,7 @@ const Game_tag = styled(Game_a_store).attrs((props) => props.href)``;
 const Game = ({ game, screenShots }) => {
     const {
         background_image,
-        background_image_additional,
+
         clip,
         developers,
         description_raw,
@@ -279,11 +281,21 @@ const Game = ({ game, screenShots }) => {
                             <GameTag key={genre.id}>{genre.name}</GameTag>
                         ))}
                     </Game_tag_row>
-                    <Game_warning__center>
-                        <Game_a href={website} target='_blank' rel='noopener noreferrer'>
-                            Click to visit game's original website
-                        </Game_a>
-                    </Game_warning__center>
+
+                    {website ? (
+                        <Game_button__orange>
+                            <Game_a href={website} target='_blank' rel='noopener noreferrer'>
+                                Click to visit game's original website
+                            </Game_a>{' '}
+                        </Game_button__orange>
+                    ) : (
+                        <Game_button__orange bgColor='#96a3ae'>
+                            <Game_a href rel='noopener noreferrer'>
+                                Can't find game's original website
+                            </Game_a>{' '}
+                        </Game_button__orange>
+                    )}
+
                     <Game_review_summary>
                         Rating:
                         <span> {rating}</span>
@@ -298,11 +310,17 @@ const Game = ({ game, screenShots }) => {
                 <GameCard>
                     <Game_meta_second>Description:</Game_meta_second>
                     <Game_review_summary>{description_raw}</Game_review_summary>
-                    <Game_meta_second>Requirements:</Game_meta_second>
-                    <Game_review_summary>{platforms[0].requirements.minimum}</Game_review_summary>
-                    <Game_review_summary>
-                        {platforms[0].requirements.recommended}
-                    </Game_review_summary>
+                    {platforms[0].requirements?.minimum && (
+                        <>
+                            <Game_meta_second>Requirements:</Game_meta_second>
+                            <Game_review_summary>
+                                {platforms[0].requirements.minimum}
+                            </Game_review_summary>
+                            <Game_review_summary>
+                                {platforms[0].requirements.recommended}
+                            </Game_review_summary>
+                        </>
+                    )}
                     <Game_meta_second>Screenshots:</Game_meta_second>
                     <Game_image_mobile>
                         {screenShots &&
@@ -340,7 +358,7 @@ const Game = ({ game, screenShots }) => {
                     ))}
 
                     <Link href={`/games`} passHref>
-                        <Game_warning__center>Back to main page</Game_warning__center>
+                        <Game_back__button>Back to main page</Game_back__button>
                     </Link>
                 </GameCard>
             </GameCard_wrap>

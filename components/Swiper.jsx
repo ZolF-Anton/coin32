@@ -22,6 +22,7 @@ export default function SwiperApp({ game, screenShots }) {
                 navigation={true}
                 modules={[Pagination, Navigation]}
                 className='mySwiper'
+                //loop={true}
             >
                 {screenShots &&
                     screenShots.results.map((shot) => (
@@ -29,11 +30,6 @@ export default function SwiperApp({ game, screenShots }) {
                             <img key={shot.id} alt={game.name} src={shot.image} />
                         </SwiperSlide>
                     ))}
-
-                <SwiperSlide>Slide First Blank</SwiperSlide>
-                <SwiperSlide>Slide ___</SwiperSlide>
-                <SwiperSlide>Slide ___</SwiperSlide>
-                <SwiperSlide>Slide Last Blank</SwiperSlide>
             </Swiper>
         </>
     );

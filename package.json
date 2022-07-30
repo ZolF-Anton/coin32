@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@next/swc-win32-ia32-msvc": "^12.2.2",
+    "@next/swc-win32-ia32-msvc": "^12.2.3",
     "next": "^12.2.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -29,3 +29,9 @@
     height: 100%;
     object-fit: cover;
 }
+
+.swiper-button-prev,
+.swiper-rtl,
+.swiper-button-next {
+    color: #e60 !important;
+}

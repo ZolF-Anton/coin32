@@ -24,7 +24,7 @@ const LinkA = styled.a`
 `;
 const GameList = styled.div`
     display: grid;
-    //grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+
     grid-template-columns: repeat(auto-fill, minmax(300px, 375px));
     grid-template-rows: repeat(auto-fill, minmax(500px, 515px));
     gap: 1rem;
@@ -86,9 +86,6 @@ const Games = ({ gamesPros }) => {
                 const resp = await fetch(searchLink);
                 const fetchData = await resp.json();
                 setData(fetchData.results);
-                console.log('##############  searchLink', searchLink);
-                console.log('############## filtPlatform', filtPlatform);
-                console.log('##############  filtOrder', filtOrder);
             })();
         } else setData(gamesPros.results);
     }, [text, filters, ordering]);

@@ -16,7 +16,6 @@ const GameCard = styled.div`
     padding: 16px;
     z-index: 3;
     box-shadow: 0 8px 24px #959da533;
-    //position: relative;
     transition: left 0.2s ease-out, top 0.2s ease-out;
     contain: layout paint;
 `;

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { PlatformType } from '../../components/mini/PlatformType';
 import { GameTag } from '../../components/mini/GameTag';
 import MainContainer from '../../components/MainContainer';
-import SwiperApp from '../../components/swiper';
+import SwiperApp from '../../components/SwiperApp';
 
 const shimmer = (w, h) => `
 <svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

@@ -26,8 +26,8 @@ export default function SwiperApp({ game, screenShots }) {
             >
                 {screenShots &&
                     screenShots.results.map((shot) => (
-                        <SwiperSlide>
-                            <img key={shot.id} alt={game.name} src={shot.image} />
+                        <SwiperSlide key={shot.id}>
+                            <img alt={game.name} src={shot.image} />
                         </SwiperSlide>
                     ))}
             </Swiper>

@@ -285,14 +285,14 @@ const Game = ({ game, screenShots }) => {
                     {website ? (
                         <Game_button__orange>
                             <Game_a href={website} target='_blank' rel='noopener noreferrer'>
-                                Click to visit game's original website
-                            </Game_a>{' '}
+                                Click to visit game&apos;s original website
+                            </Game_a>
                         </Game_button__orange>
                     ) : (
                         <Game_button__orange bgColor='#96a3ae'>
                             <Game_a href rel='noopener noreferrer'>
-                                Can't find game's original website
-                            </Game_a>{' '}
+                                Can&apos;t find game&apos;s original website
+                            </Game_a>
                         </Game_button__orange>
                     )}
 
@@ -325,9 +325,8 @@ const Game = ({ game, screenShots }) => {
                     <Game_image_mobile>
                         {screenShots &&
                             screenShots.results.map((shot) => (
-                                <Game_image_wrap>
+                                <Game_image_wrap key={shot.id}>
                                     <Image
-                                        key={shot.id}
                                         alt={name}
                                         src={shot.image}
                                         layout='fill'

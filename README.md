@@ -1,14 +1,14 @@
 <p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
+  <a href="https://nextjs.org/">
+    <img alt="Gatsby" src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" width="60" />
   </a>
 </p>
 <h1 align="center">
- Willkommen to Zavod. It's based on Gatsby (One of the best SSG).
+ Willkommen to Game DB. It's based on Next.js (One of the best SSR).
 </h1>
 <h3>
- <a href="https://zavod-kd.ru/">
-    You can visit it here: https://zavod-kd.ru/
+ <a href="https://coin32-p1yduw7qt-zolf-anton.vercel.app/">
+    Click me! to visit.
   </a>
 </h3>
 
@@ -104,9 +104,9 @@ Stylization – Styled-component.</br>
 
 <p>
  <img
-                        src="https://anton-zolf.su/img/zavod_1.PNG"
-                        alt="Zavod view"
-                        width="605"
-                        height="450"
+                        src="https://anton-zolf.su/img/game.PNG"
+                        alt="game"
+                        width="907"
+                        height="412"
                     />
 </p>
